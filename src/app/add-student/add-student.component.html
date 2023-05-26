@@ -1,0 +1,42 @@
+<h2>Add Student</h2>
+<form [formGroup]="form">
+  <div formGroupName="personalDetails">
+    <label>Student name</label>
+    <input type="text" #name formControlName="name" />
+    <div
+      class="error"
+      *ngIf="
+        !form.get('personalDetails.name')?.valid &&
+        form.get('personalDetails.name')?.touched
+      "
+    >
+      <p *ngIf="form.get('personalDetails.name')!.errors!['required']">
+        name is required*
+      </p>
+    </div>
+    <label>Student email</label>
+    <input type="text" #email formControlName="email" />
+    <div
+      class="error"
+      *ngIf="
+        !form.get('personalDetails.email')?.valid &&
+        form.get('personalDetails.email')?.touched &&
+        form.get('personalDetails.email')?.errors
+      "
+    >
+      <p *ngIf="(form.get('personalDetails.email')?.errors)!['required']">
+        Email is required*
+      </p>
+      <p
+        *ngIf="
+          form.get('personalDetails.email')?.value &&
+          !form.get('personalDetails.email')?.value.endsWith('@thejitu.com')
+        "
+      >
+        Only emails with '@thejitu.com' are allowed.
+      </p>
+    </div>
+
+    <button (click)="addStudent(name.value, email.value)">Add Student</button>
+  </div>
+</form>
